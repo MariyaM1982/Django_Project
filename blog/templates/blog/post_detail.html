@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ post.title }}</h1>
+    <p class="text-muted">
+        Опубликовано: {{ post.created_at|date:"d.m.Y H:i" }} | Просмотров: {{ post.views_count }}
+    </p>
+    {% if post.preview %}
+    <img src="{{ post.preview.url }}" class="img-fluid mb-3" alt="{{ post.title }}">
+    {% endif %}
+    <p>{{ post.content }}</p>
+    <div class="mt-4">
+        <a href="{% url 'blog:post_list' %}" class="btn btn-secondary">← Назад</a>
+        <a href="{% url 'blog:post_update' post.pk %}" class="btn btn-warning">Редактировать</a>
+        <a href="{% url 'blog:post_delete' post.pk %}" class="btn btn-danger">Удалить</a>
+    </div>
+</div>
+{% endblock %}
+
