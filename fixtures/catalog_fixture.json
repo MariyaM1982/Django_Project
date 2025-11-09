@@ -1,0 +1,52 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Рассылки",
+        "description": "Автоматические рассылки"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Телеграм боты",
+        "description": "Боты для Telegram"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+        "name": "Полезные утилиты",
+        "description": "Различные полезные инструменты"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Рассылка новостей",
+        "description": "Ежедневная рассылка новостей",
+        "image": "",
+        "category": 1,
+        "price": "150.00",
+        "created_at": "2025-10-16T15:06:43.517Z",
+        "updated_at": "2025-10-16T15:19:10.100Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Telegram-бот заказов",
+        "description": "Бот для автоматизации заказов",
+        "image": "",
+        "category": 2,
+        "price": "200.00",
+        "created_at": "2025-10-16T15:06:51.436Z",
+        "updated_at": "2025-10-16T15:06:51.436Z"
+    }
+}
+]
