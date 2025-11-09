@@ -26,31 +26,14 @@ class Product(models.Model):
 
     name = models.CharField(max_length=200, verbose_name="Наименование")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    image = models.ImageField(
-        upload_to="products/images/", blank=True, null=True, verbose_name="Изображение"
-    )
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.SET_NULL,
-        null=True,
-        related_name="products",
-        verbose_name="Категория",
-    )
-    price = models.DecimalField(
-        max_digits=10, decimal_places=2, verbose_name="Цена за покупку"
-    )
-    created_at = models.DateTimeField(
-        default=timezone.now, verbose_name="Дата создания"
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True, verbose_name="Дата последнего изменения"
-    )
+    image = models.ImageField(upload_to="products/images/", blank=True, null=True, verbose_name="Изображение")
+    preview = models.ImageField(upload_to="catalog/previews/", null=True, blank=True, verbose_name="Превью")
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True, related_name="products", verbose_name="Категория")
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена за покупку")
+    created_at = models.DateTimeField(default=timezone.now, verbose_name="Дата создания")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
 
-    views_counter = models.PositiveIntegerField(
-        verbose_name="Cчетчик просмотров",
-        help_text="Укажите количество просмотров",
-        default=0
-    )
+    views_counter = models.PositiveIntegerField(verbose_name="Cчетчик просмотров", help_text="Укажите количество просмотров", default=0)
 
     class Meta:
         verbose_name = "Продукт"
