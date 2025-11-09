@@ -1,4 +1,3 @@
-# catalog/models.py
 from django.db import models
 from django.utils import timezone
 
@@ -45,6 +44,12 @@ class Product(models.Model):
     )
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
+    )
+
+    views_counter = models.PositiveIntegerField(
+        verbose_name="Cчетчик просмотров",
+        help_text="Укажите количество просмотров",
+        default=0
     )
 
     class Meta:
