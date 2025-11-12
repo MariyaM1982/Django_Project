@@ -1,12 +1,16 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
-from .models import Product
 from .forms import ProductForm
 from catalog.models import Product
 
 class ProductListView(ListView):
     model = Product
+    template_name = 'catalog/product_list.html'
+    context_object_name = 'object_list'
+
+    def get_queryset(self):
+        return Product.objects.all()
 
 class ProductDetailView(DetailView):
     model = Product
@@ -17,23 +21,27 @@ class ProductDetailView(DetailView):
         self.object.save()
         return self.object
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
-    success_url = reverse_lazy("catalog:product_list")
+    template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:product_list')
+    login_url = '/users/login/'  # Куда перенаправить, если не авторизован
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
-    success_url = reverse_lazy("catalog:product_list")
+    template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:product_list')
+    login_url = '/users/login/'
 
-    def get_success_url(self):
-        return reverse("catalog:product_detail", args={self.kwargs['pk']})
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
-    success_url = reverse_lazy("catalog:product_list")
-
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:product_list')
+    login_url = '/users/login/'
 
 class HomeView(TemplateView):
     template_name = "catalog/home.html"
