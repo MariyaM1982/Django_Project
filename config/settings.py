@@ -155,7 +155,3 @@ DEFAULT_FROM_EMAIL = 'webmaster@skystore.com'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-# Email (для разработки — выводит письмо в консоль)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@yoursite.com'
