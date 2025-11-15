@@ -33,6 +33,11 @@ DEBUG = True #True if os.getenv('SECRET_KEY') == 'True' else False
 ALLOWED_HOSTS = ["*"]
 
 
+
+
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,8 +49,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "catalog",
     "blog",
+    "users",
 ]
 
+AUTH_USER_MODEL = 'users.User'
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -81,6 +88,8 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME":"django_project_db",
         "USER": 'postgres',
@@ -108,6 +117,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+
 
 
 # Internationalization
@@ -141,3 +152,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Настройка почты (вывод в консоль)
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'webmaster@skystore.com'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

@@ -1,25 +1,77 @@
 {% extends 'catalog/base.html' %}
+
 {% block content %}
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-         <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            <div class="card-body">
-              <p class="card-text">Наименование продукта: {{ object.name}}</p>
-              <p class="card-text">Категория продукта: {{ object.category}}</p>
-              <p class="card-text">Стоимость продукта: {{ object.price}}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a class="btn btn-primary" href="{% url 'catalog:product_list' %}" role="button">Назад</a>
-                </div>
-                <small class="text-body-secondary">9 mins</small>
-              </div>
+<div class="container py-5">
+    <div class="row g-4">
+        <!-- Изображение -->
+        <div class="col-md-6">
+            <div class="position-relative">
+                {% if object.preview %}
+                    <img src="{{ object.preview.url }}" class="img-fluid rounded shadow-sm" alt="{{ object.name }}" style="width: 100%; height: 400px; object-fit: cover;">
+                {% elif object.image %}
+                    <img src="{{ object.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ object.name }}" style="width: 100%; height: 400px; object-fit: cover;">
+                {% else %}
+                    <div class="bg-light text-center text-muted d-flex align-items-center justify-content-center rounded shadow-sm" style="width: 100%; height: 400px;">
+                        Нет изображения
+                    </div>
+                {% endif %}
             </div>
-          </div>
         </div>
-      </div>
+
+        <!-- Описание товара -->
+        <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h1 class="card-title mb-3">{{ object.name }}</h1>
+
+                    <p class="card-text fs-5 text-muted">
+                        {{ object.description }}
+                    </p>
+
+                    <p class="card-text text-primary fw-bold fs-4 mt-3">
+                        {{ object.price }} руб.
+                    </p>
+
+                    <p class="text-muted">
+                        <small>Просмотров: {{ object.views_counter }}</small>
+                    </p>
+
+                    <!-- Кнопки действий -->
+                    <div class="mt-auto">
+                        <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary">Назад к каталогу</a>
+
+                        {% if can_edit %}
+                            <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-outline-success">Редактировать</a>
+                            <form method="post" action="{% url 'catalog:product_unpublish' object.pk %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-warning">Снять с публикации</button>
+                            </form>
+                        {% endif %}
+
+                        {% if can_delete %}
+                            <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-outline-danger">Удалить</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- Дополнительная информация -->
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Информация о товаре</h5>
+                    <ul class="list-unstyled">
+                        <li><strong>Категория:</strong> {{ object.category }}</li>
+                        <li><strong>Дата создания:</strong> {{ object.created_at|date:"d.m.Y H:i" }}</li>
+                        <li><strong>Последнее изменение:</strong> {{ object.updated_at|date:"d.m.Y H:i" }}</li>
+                        <li><strong>Опубликован:</strong> {% if object.is_published %}Да{% else %}Нет{% endif %}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
