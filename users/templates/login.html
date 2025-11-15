@@ -1,0 +1,25 @@
+
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-md-6 col-lg-5">
+        <form method="post">
+            {% csrf_token %}
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h4 class="text-center mb-4">Вход</h4>
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    {{ form.as_p }}
+                </div>
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
