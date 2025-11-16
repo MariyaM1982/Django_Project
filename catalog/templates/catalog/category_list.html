@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h1>Категории товаров</h1>
+
+    {% if categories %}
+        <div class="row g-3 mt-3">
+            {% for category in categories %}
+                <div class="col-md-4">
+                    <a href="{% url 'catalog:product_category' category %}" class="btn btn-outline-primary btn-lg w-100">
+                        {{ category|capfirst }}
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">Категории пока не добавлены.</p>
+    {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-secondary">Вернуться к каталогу</a>
+    </div>
+</div>
+{% endblock %}
